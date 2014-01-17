@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "Data.h"
 
 @implementation AppDelegate
 
@@ -21,49 +22,61 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
-    // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
+    [[Data sharedData] read];
+    /*
+     * 首页
+     */
+    MainViewController *mainController = [[MainViewController alloc] init];
+    UINavigationController *main = [[UINavigationController alloc] initWithRootViewController:mainController];
+    UITabBarItem *tabBarItem1 = [[UITabBarItem alloc] initWithTitle:@"通讯录" 
+                                                       image:[UIImage imageNamed:@"home.png"] 
+                                                         tag:1];  
+    main.tabBarItem = tabBarItem1;
+    [tabBarItem1 release];
+    [mainController release];
+    
+    
+    /*
+     * 组
+     */
+    TeamViewController *teamController = [[TeamViewController alloc] init];
+    UINavigationController *team = [[UINavigationController alloc] initWithRootViewController:teamController];
+    UITabBarItem *tabBarItem2 = [[UITabBarItem alloc] initWithTitle:@"组" 
+                                                              image:[UIImage imageNamed:@"user_group.png"] 
+                                                                tag:2];  
+    team.tabBarItem = tabBarItem2;
+    [tabBarItem2 release];
+    [teamController release];
+    
+    
+    /*
+     * 搜索页
+     */
+    QueryViewController *queryController = [[QueryViewController alloc] init];
+    UINavigationController *query = [[UINavigationController alloc] initWithRootViewController:queryController];
+    UITabBarItem *tabBarItem3 = [[UITabBarItem alloc] initWithTitle:@"搜索" 
+                                                       image:[UIImage imageNamed:@"search.png"] 
+                                                         tag:3];  
+    query.tabBarItem = tabBarItem3;
+    [tabBarItem3 release];
+    [queryController release];
+    
+    
+    /*
+     * 标签栏
+     */
+    UITabBarController *tabBarController = [[UITabBarController alloc] init];
+    tabBarController.delegate = self;
+    tabBarController.view.frame = [[UIScreen mainScreen] bounds];
+    tabBarController.viewControllers = [NSArray arrayWithObjects:main, team, query, nil];
+    [main release];
+    [query release];
+    
+    [self.window addSubview:tabBarController.view];
     [self.window makeKeyAndVisible];
+    
     return YES;
-}
-
-- (void)applicationWillResignActive:(UIApplication *)application
-{
-    /*
-     Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-     Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-     */
-}
-
-- (void)applicationDidEnterBackground:(UIApplication *)application
-{
-    /*
-     Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
-     If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-     */
-}
-
-- (void)applicationWillEnterForeground:(UIApplication *)application
-{
-    /*
-     Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-     */
-}
-
-- (void)applicationDidBecomeActive:(UIApplication *)application
-{
-    /*
-     Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-     */
-}
-
-- (void)applicationWillTerminate:(UIApplication *)application
-{
-    /*
-     Called when the application is about to terminate.
-     Save data if appropriate.
-     See also applicationDidEnterBackground:.
-     */
 }
 
 @end

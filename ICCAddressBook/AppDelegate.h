@@ -7,8 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MainViewController.h"
+#import "TeamViewController.h"
+#import "QueryViewController.h"
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate, UITabBarControllerDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 
